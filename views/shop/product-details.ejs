@@ -3,4 +3,14 @@
 </head>
 <body>
     <%- include('../includes/nav.ejs', {activeShop: true})  %>
+    <main class="centered">
+        <div class="product-details">
+            <h1><%= product.title %></h1>
+            <hr>
+            <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
+            <p><strong>Price:</strong> $<%= product.price %></p>
+            <p><strong>Description:</strong> <%= product.description %></p>
+            <%- include('../includes/add-to-cart.ejs')  %>
+        </div>
+    </main>
     <% include('../includes/footer.ejs') %>
