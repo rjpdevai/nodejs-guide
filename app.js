@@ -1,16 +1,9 @@
 const express = require('express');
 const path = require('path');
 const errorController = require('./controllers/error');
-const expressHbs = require('express-handlebars');
-
-const db = require('./util/database');
+const sequelize = require('./util/database');
 
 const app = express();
-
-//app.engine('hbs', expressHbs.engine({ layoutsDir: 'views/layouts/', defaultLayout: 'main-layout', extname: 'hbs' }));
-//app.set('view engine', 'hbs');
-
-// app.set('view engine', 'pug');
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -26,4 +19,11 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-app.listen(3000);
+sequelize.sync().then(result => {
+    console.log('Database synchronized');
+    app.listen(3000);
+}).catch(err => {
+    console.log(err);
+});
+
+
