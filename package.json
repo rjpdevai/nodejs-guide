@@ -5,5 +5,8 @@
     "express-handlebars": "^8.0.3",
     "nodemon": "^3.1.10",
     "pug": "^3.0.3"
+  },
+  "dependencies": {
+    "mysql2": "^3.15.1"
   }
 }

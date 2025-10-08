@@ -3,6 +3,8 @@ const path = require('path');
 const errorController = require('./controllers/error');
 const expressHbs = require('express-handlebars');
 
+const db = require('./util/database');
+
 const app = express();
 
 //app.engine('hbs', expressHbs.engine({ layoutsDir: 'views/layouts/', defaultLayout: 'main-layout', extname: 'hbs' }));
