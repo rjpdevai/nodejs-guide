@@ -11,19 +11,19 @@
                     <li class="product-item">
                         <div>
                             <h2><%= p.title %></h2>
-                            <p>Quantity: <%= p.cartItem.quantity %></p>
+                            <p>Quantity: <%= p.quantity %></p>
                             <p>Price: $<%= p.price %></p>
                         </div>
                         <div>
                             <form action="/cart-delete-item" method="POST">
-                                <input type="hidden" name="productId" value="<%= p.id %>">
+                                <input type="hidden" name="productId" value="<%= p._id %>">
                                 <button type="submit">Delete</button>
                             </form>
                         </div>
                     </li>
                 <% }) %>
             </ul>
-            <h2>Total Price: $<%= totalPrice %></h2>
+            
             <form action="/create-order" method="POST">
                 <button type="submit">Order Now</button>
             </form>
