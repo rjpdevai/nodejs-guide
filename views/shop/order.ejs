@@ -11,17 +11,17 @@
                 <div class="order-item">
                     <h2>Order ID: <%= order._id %></h2>
                     <ul class="product-list">
-                        <% order.items.forEach(p => { %>
+                        <% order.products.forEach(p => { %>
                             <li class="product-item">
                                 <div>
-                                    <h3><%= p.title %></h3>
+                                    <h3><%= p.product.title %></h3>
                                     <p>Quantity: <%= p.quantity %></p>
-                                    <p>Price: $<%= p.price %></p>
+                                    <p>Price: $<%= p.product.price %></p>
                                 </div>
                             </li>
                         <% }) %>
                     </ul>
-                    <h3>Total Price: $<%= order.items.reduce((total, p) => total + p.price * p.quantity, 0) %></h3>
+                    <h3>Total Price: $<%= order.products.reduce((total, p) => total + p.product.price * p.quantity, 0) %></h3>
                 </div>
             <% }) %>
         <% } else { %>
