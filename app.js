@@ -11,6 +11,7 @@ app.set('views', 'views');
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
+const authRoutes = require('./routes/auth');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -26,6 +27,8 @@ app.use((req, res, next) => {
 
 app.use(adminRoutes);
 app.use(shopRoutes);
+app.use(authRoutes);
+
 app.use(errorController.get404);
 
 mongoose.connect('mongodb://localhost:27017/shop')
