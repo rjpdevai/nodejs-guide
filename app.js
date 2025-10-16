@@ -7,6 +7,7 @@ const errorController = require('./controllers/error');
 const User = require('./models/user');
 const MONGODB_URI = 'mongodb://localhost:27017/shop';
 const csrf = require('csurf');
+const flash = require('connect-flash');
 
 const app = express();
 const store = new MongoDBStore({
@@ -29,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'my secret', resave: false, saveUninitialized: false, store: store }));
 
 app.use(csrfProtection);
+app.use(flash());
 
 app.use((req, res, next) => {
     if (!req.session.user) {
