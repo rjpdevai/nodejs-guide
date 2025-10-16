@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -8,6 +9,7 @@ const User = require('./models/user');
 const MONGODB_URI = 'mongodb://localhost:27017/shop';
 const csrf = require('csurf');
 const flash = require('connect-flash');
+
 
 const app = express();
 const store = new MongoDBStore({
