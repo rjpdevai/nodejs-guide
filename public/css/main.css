@@ -235,10 +235,10 @@ form {
 .user-message {
   margin: auto;
   width: 90%;
-  border: 1px solid #4771fa;
+  border: 1px solid red;
   padding: 0.5rem;
   border-radius: 3px;
-  background: #b9c9ff;
+  background: #ffb9b9;
   text-align: center;
 }
 
