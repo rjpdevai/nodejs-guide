@@ -17,6 +17,7 @@
                                     <h3><%= p.product.title %></h3>
                                     <p>Quantity: <%= p.quantity %></p>
                                     <p>Price: $<%= p.product.price %></p>
+                                    <p><a href="/orders/<%= order._id %>">Download Invoice</a></p>
                                 </div>
                             </li>
                         <% }) %>
