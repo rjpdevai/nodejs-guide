@@ -1,5 +1,7 @@
 const fs = require('fs');
 const path = require('path');
+const Stripe = require('stripe');
+const stripe = Stripe(process.env.STRIPE_SK_KEY);
 const Product = require('../models/product');
 const Order = require('../models/Order');
 const PDFDocument = require('pdfkit');
@@ -101,7 +103,52 @@ exports.postCart = (req, res, next) => {
 };
 
 exports.getCheckout = (req, res, next) => {
-    res.render('shop/checkout', { pageTitle: 'Checkout', path: '/checkout' });
+    let products;
+    let total = 0;
+
+    req.user
+        .populate('cart.items.productId')
+        .then(user => {
+            products = user.cart.items;
+            products.forEach(p => {
+                total += p.quantity * p.productId.price;
+            });
+            return stripe.checkout.sessions.create({
+                payment_method_types: ['card'],
+                line_items: products.map(p => {
+                    return {
+                        price_data: {
+                            currency: 'cad',
+                            product_data: {
+                                name: p.productId.title,
+                                description: p.productId.description,
+                            },
+                            unit_amount: Math.round(p.productId.price * 100),
+                        },
+                        quantity: p.quantity
+                    }
+                }),
+                mode: 'payment',
+                success_url: req.protocol + '://' + req.get('host') + '/checkout/success',
+                cancel_url: req.protocol + '://' + req.get('host') + '/checkout/cancel'
+            });
+        })
+        .then(session => {
+            res.render('shop/checkout', {
+                pageTitle: 'Checkout',
+                path: '/checkout',
+                products: products,
+                totalSum: total,
+                sessionId: session.id,
+                STRIPE_PK_KEY: process.env.STRIPE_PK_KEY
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        });
 };
 
 exports.postCartDeleteProduct = (req, res, next) => {
